@@ -1,0 +1,27 @@
+---
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: eks
+  region: us-west-2
+  version: '1.26'
+
+
+managedNodeGroups:
+- name: nodegroup
+  minSize: 1
+  maxSize: 4
+  desiredCapacity: 2
+  instanceType: t3.medium
+  iam:
+    withAddonPolicies:
+      ebs: true
+      fsx: true
+      efs: true
+cloudWatch:
+    clusterLogging:
+        # enable specific types of cluster control plane logs
+        enableTypes: ["audit", "authenticator", "controllerManager"]
+        # all supported types: "api", "audit", "authenticator", "controllerManager", "scheduler"
+        # supported special values: "*" and "all"
